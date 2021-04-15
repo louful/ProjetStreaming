@@ -1,6 +1,6 @@
-#Project Kafka SparkStreaming
+# Project Kafka SparkStreaming
 
-##Set up Kafka single broker 
+## Set up Kafka single broker 
 
 Start Zookepeer, Kafka controler, Kafka Brooker 
 ```
@@ -15,7 +15,7 @@ Check all containers ( -a for all  even those who are in use)
 ```
 docker ps -a
 ```
-##Start Spark Job
+## Start Spark Job
 
 
 ```

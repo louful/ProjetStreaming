@@ -23,7 +23,7 @@ spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1 --py-fi
 ```
 --packages for depence kafka
 
-##Start Kafka in the terminal 
+## Start Kafka in the terminal 
 
 bin/zookeeper-server-start.sh config/zookeeper.properties
 

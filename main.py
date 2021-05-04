@@ -48,4 +48,3 @@ ds = df_test \
  .format("console") \
  .start()\
  .awaitTermination()
-

@@ -32,15 +32,13 @@ df = spark \
   .load()
 
 
-
-
-df_test = df.select(from_json(col("value").cast("string"), schema).alias("value"))\
-    .select(
+df_test = df.select(from_json(col("value").cast("string"), schema).alias("value")).select(
     F.col('value').getItem('key'),
     F.col('value').getItem('client_uuid'),
     F.col('value').getItem('request_dt'),
     F.col('value').getItem('latitude'),
-    F.col('value').getItem('longitude'))
+    F.col('value').getItem('longitude')
+)
 
 # Write key-value data from a DataFrame to a specific Kafka topic specified in an option
 ds = df_test \

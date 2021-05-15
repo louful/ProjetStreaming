@@ -3,7 +3,7 @@ from pyspark.sql import functions as F
 from pyspark.sql.dataframe import DataFrame
 from zone import ZONE_1, ZONE_2, ZONE_3, ZONE_4, ZONE_5, ZONE_6, ZONE_7, ZONE_8, ZONE_9
 
-def extract_nested_fields(dataframe: DataFrame, schema):
+def extract_fields_demands(dataframe: DataFrame, schema):
     df_test = dataframe.select(from_json(col("value").cast("string"), schema).alias("value")).select(
         F.col('value').getItem('key'),
         F.col('value').getItem('client_uuid'),
@@ -13,7 +13,7 @@ def extract_nested_fields(dataframe: DataFrame, schema):
     )
     return df_test
 
-def extract_nested_fields1(dataframe: DataFrame, schema1):
+def extract_fields_taxi_ride(dataframe: DataFrame, schema1):
     df_test1 = dataframe.select(from_json(col("value").cast("string"), schema1).alias("value")).select(
         F.col('value').getItem('key'),
         F.col('value').getItem('amount'),

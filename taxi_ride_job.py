@@ -16,11 +16,11 @@ def run_stream():
         .option("subscribe", "taxi") \
         .load()
 
-    schema = get_schema_taxi_request()
+    schema1 = get_schema_ride
 
 # Business logic
-    df_with_unnested_fields = extract_fields_demands(df, schema)
-    df_with_zone = get_zone(df_with_unnested_fields)
+    df_with_unnested_fields_taxi = extract_fields_taxi_ride(df, schema1)
+    df_with_zone = get_zone(df_with_unnested_fields_taxi)
 
     # Write key-value data from a DataFrame to a specific Kafka topic specified in an option
     df_with_zone \

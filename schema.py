@@ -1,14 +1,14 @@
-from pyspark.sql.types import StructType, StructField, StringType
+from pyspark.sql.types import StructType, StructField, StringType ,FloatType
 
 
 def get_schema_taxi_request():
     schema = StructType(
         [
-            StructField('key', StringType(), True),
+            StructField('timestamp', StringType(), True),
             StructField('client_uuid', StringType(), True),
             StructField('request_dt', StringType(), True),
-            StructField('latitude', StringType(), True),
-            StructField('longitude', StringType(), True)
+            StructField('latitude', FloatType(), True),
+            StructField('longitude', FloatType(), True)
 
         ]
     )
@@ -17,7 +17,7 @@ def get_schema_taxi_request():
 def get_schema_ride():
     schema1 = StructType(
         [
-            StructField('key', StringType(), True),
+            StructField('timestamp', StringType(), True),
             StructField('amount', StringType(), True),
             StructField('pickup_time', StringType(), True),
             StructField('dropoff_time', StringType(), True),

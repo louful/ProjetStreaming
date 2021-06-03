@@ -33,7 +33,7 @@ def run_stream():
 
 def write_df(dataframe, id):
 
-    dataframe.write.jdbc(url=db_properties['url'], table='data', mode='append', properties=db_properties)
+    dataframe.write.jdbc(url=db_properties['url'], table='rides', mode='append', properties=db_properties)
 
 if __name__ == '__main__':
     run_stream()

@@ -6,7 +6,6 @@ def get_schema_taxi_request():
         [
             StructField('timestamp', StringType(), True),
             StructField('client_uuid', StringType(), True),
-            StructField('request_dt', StringType(), True),
             StructField('latitude', FloatType(), True),
             StructField('longitude', FloatType(), True)
 
@@ -19,8 +18,6 @@ def get_schema_ride():
         [
             StructField('timestamp', StringType(), True),
             StructField('amount', FloatType(), True),
-            StructField('pickup_time', FloatType(), True),
-            StructField('dropoff_time', FloatType(), True),
             StructField('pickup_latitude', FloatType(), True),
             StructField('pickup_longitude', FloatType(), True),
             StructField('dropoff_latitude', FloatType(), True),

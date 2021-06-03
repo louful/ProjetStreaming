@@ -45,20 +45,6 @@ services:
     command: ["tail", "-f", "/dev/null"]
     network_mode: "host"
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:5.4.0
-    restart: always
-    hostname: schema-registry
-    container_name: schema-registry
-    depends_on:
-      - zookeeper
-      - broker
-    ports:
-      - "8081:8081"
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
-
   control-center:
     image: confluentinc/cp-enterprise-control-center:5.4.0
     restart: always
@@ -67,13 +53,11 @@ services:
     depends_on:
       - zookeeper
       - broker
-      - schema-registry
     ports:
       - "9021:9021"
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
       CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1

@@ -6,31 +6,28 @@ from properties import db_properties
 
 def extract_fields_demands(dataframe: DataFrame, schema):
     df_test = dataframe.select(from_json(col("value").cast("string"), schema).alias("value")).select(
-        F.col('value').getItem('timestamp'),
-        F.col('value').getItem('client_uuid'),
-        F.col('value').getItem('request_dt'),
-        F.col('value').getItem('latitude').alias("_latitude"),
-        F.col('value').getItem('longitude').alias("_longitude")
+        F.col('value').getItem('timestamp').alias("timestamp"),
+        F.col('value').getItem('client_uuid').alias("client_id"),
+        F.col('value').getItem('latitude').alias("pickup_latitude"),
+        F.col('value').getItem('longitude').alias("pickup_longitude")
     )
     return df_test
 
 def extract_fields_taxi_ride(dataframe: DataFrame, schema1):
     df_test1 = dataframe.select(from_json(col("value").cast("string"), schema1).alias("value")).select(
-        F.col('value').getItem('timestamp'),
-        F.col('value').getItem('amount'),
-        F.col('value').getItem('pickup_time'),
-        F.col('value').getItem('dropoff_time'),
+        F.col('value').getItem('timestamp').alias("timestamp"),
+        F.col('value').getItem('amount').alias("amount"),
         F.col('value').getItem('pickup_latitude').alias("pickup_latitude"),
         F.col('value').getItem('pickup_longitude').alias("pickup_longitude"),
         F.col('value').getItem('dropoff_latitude').alias("dropoff_latitude"),
         F.col('value').getItem('dropoff_longitude').alias("dropoff_longitude"),
-        F.col('value').getItem('tips')
+        F.col('value').getItem('tips').alias("tips")
     )
     return df_test1
 
 def get_zone(dataframe: DataFrame, direction):
 
-    dataframe_with_zone = dataframe.withColumn("zone",
+    dataframe_with_zone = dataframe.withColumn(f"{direction}_zone",
                                                when((col(f"{direction}_latitude") < ZONE_1.latitude_1) & (col(f"{direction}_latitude") > ZONE_1.latitude_2) & (col(f"{direction}_longitude") > ZONE_1.longitude_1) & (col(f"{direction}_longitude") < ZONE_1.longitude_2), "ZONE1")
                                                .when((col(f"{direction}_latitude") < ZONE_2.latitude_1) & (col(f"{direction}_latitude") > ZONE_2.latitude_2) & (col(f"{direction}_longitude") > ZONE_2.longitude_1) & (col(f"{direction}_longitude") < ZONE_2.longitude_2), "ZONE2")
                                                .when((col(f"{direction}_latitude") < ZONE_3.latitude_1) & (col(f"{direction}_latitude") > ZONE_3.latitude_2) & (col(f"{direction}_longitude") > ZONE_3.longitude_1) & (col(f"{direction}_longitude") < ZONE_3.longitude_2), "ZONE3")
@@ -44,29 +41,5 @@ def get_zone(dataframe: DataFrame, direction):
 
     return dataframe_with_zone
 
-def zone_demand(dataframe_with_zone):
-    dataframe_with_demand = dataframe_with_zone.groupBy("zone").count()
 
-    return dataframe_with_demand
-
-def test(dataframe_with_zone):
-    dataframe_test = dataframe_with_zone.groupBy("zone").count()\
-        .max()
-
-    return dataframe_test
-
-def moy(dataframe_with_zone):
-    dataframe_moy = dataframe_with_zone.groupBy("zone").mean("amount").alias("MeanAmount")
-
-    return dataframe_moy
-
-def tips(dataframe_with_zone):
-    dataframe_tips = dataframe_with_zone.groupBy("zone").agg(sum("tips").alias("TotalTips"))
-
-    return dataframe_tips
-
-def sum(dataframe_with_zone):
-    dataframe_sum = dataframe_with_zone.groupBy("zone").agg(sum("amount").alias("TotalAmount"))
-
-    return dataframe_sum
 

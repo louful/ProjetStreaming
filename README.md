@@ -1,5 +1,22 @@
 # Project Kafka SparkStreaming
 
+
+## To lunch the code on your computer you just have to :
+
+```
+https://github.com/louful/ProjetStreaming.git
+```
+
+Lunch the virtual environment
+```
+virtualenv env
+source env/bin/activate
+```
+Download all the librairies
+```
+pip3 install -r requirements.txt
+```
+
 ## Set up Kafka single broker 
 
 Start Zookepeer, Kafka controler, Kafka Brooker 
